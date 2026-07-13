@@ -79,6 +79,7 @@ function buildChannelUI() {
   state.channels.forEach((ch, idx) => {
     const wrap = document.createElement("div");
     wrap.className = "channel-card";
+    wrap.dataset.channelCard = String(idx);
     wrap.innerHTML = `
       <div class="channel-head">
         <div>
@@ -239,6 +240,11 @@ function updateUI() {
     }
     const mini = document.querySelector(`[data-mini="${idx}"]`);
     if (mini) mini.textContent = summarizeChannel(ch);
+    const card = document.querySelector(`[data-channel-card="${idx}"]`);
+    if (card) {
+      card.classList.toggle("channel-active", !!ch.active);
+      card.classList.toggle("channel-inactive", !ch.active);
+    }
   });
   updateNowSummary();
 }

@@ -35,3 +35,6 @@ Notas
 
 
 Novidade v2: acrescentado pulso de Coerência cardíaca 0.1 Hz, criando 8 presets adicionais com ciclo de 10 segundos e ADSR longo/suave.
+
+
+NOTA v3: Para evitar erro 404, faça upload dos ficheiros soltos na raiz do repositório: index.html, style.css, app.js, presets.js, manifest.json, service-worker.js, icons/, LEIA-ME_PT.txt. Não carregue apenas a pasta-mãe inteira.

@@ -3,22 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#111827" />
-  <meta name="description" content="SynthLab Isochronic PWA v2: gerador leve de frequências, pulsos isocrónicos e presets Solfeggio para Android/Chrome." />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="SynthLab Isochronic PWA v3: gerador leve de frequências, pulsos isocrónicos e presets Solfeggio para Android/Chrome." />
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="icons/icon-192.png" />
   <title>SynthLab Isochronic</title>
-  <details class="notice">
-  <summary>Nota sobre os presets</summary>
-  <p>
-    Os presets Solfeggio/isocrónicos são mapeamentos simbólicos, subjetivos e experimentais.
-    Esta aplicação gera áudio para exploração sonora, relaxamento, meditação e estudo de frequências.
-    Não é um dispositivo médico, não diagnostica, não trata, não cura e não previne doenças.
-    Os presets não substituem aconselhamento médico, psicológico ou terapêutico profissional.
-    Use volume baixo e interrompa a utilização se sentir desconforto.
-  </p>
-</details>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -31,6 +21,17 @@
   </header>
 
   <main>
+    <details class="notice">
+      <summary>Nota sobre os presets</summary>
+      <p>
+        Os presets Solfeggio/isocrónicos são mapeamentos simbólicos, subjetivos e experimentais.
+        Esta aplicação gera áudio para exploração sonora, relaxamento, meditação e estudo de frequências.
+        Não é um dispositivo médico, não diagnostica, não trata, não cura e não previne doenças.
+        Os presets não substituem aconselhamento médico, psicológico ou terapêutico profissional.
+        Use volume baixo e interrompa a utilização se sentir desconforto.
+      </p>
+    </details>
+
     <section class="status-card" aria-live="polite">
       <div class="status-topline">
         <strong>A OUVIR AGORA</strong>
@@ -44,7 +45,7 @@
           <span id="masterLabel">25%</span>
         </label>
       </div>
-      <p class="safety-note">Comece com volume baixo. Não usar como tratamento médico nem como gerador calibrado.</p>
+      <p class="safety-note">Comece com volume baixo. Presets simbólicos/subjetivos; não é tratamento médico nem gerador calibrado.</p>
     </section>
 
     <section class="card">
@@ -85,7 +86,7 @@
       <div id="channels"></div>
     </section>
 
-    <details class="card details-card">
+    <details class="card details-card export-card">
       <summary>Exportar WAV e guardar estado</summary>
       <div class="grid two padded-top">
         <label>Duração WAV (s)
@@ -106,17 +107,21 @@
     <details class="card details-card">
       <summary>Como instalar no Android</summary>
       <ol>
-        <li>Aloje estes ficheiros num endereço HTTPS, por exemplo GitHub Pages.</li>
-        <li>Abra o link no Chrome do Android.</li>
-        <li>Menu ⋮ → <strong>Adicionar ao ecrã principal</strong>.</li>
-        <li>Depois de abrir uma vez, a app pode funcionar offline.</li>
+        <li>Abrir o link da aplicação no <strong>Chrome Android</strong>, com Internet ligada.</li>
+        <li>Esperar que a aplicação carregue completamente.</li>
+        <li>Abrir o menu do Chrome nos três pontos <strong>⋮</strong>.</li>
+        <li>Escolher a opção que aparecer: <strong>Instalar app</strong>, <strong>Criar atalho</strong>, <strong>Adicionar ao ecrã principal</strong> ou <strong>Adicionar à página inicial</strong>.</li>
+        <li>Confirmar a criação do ícone.</li>
+        <li>Abrir a aplicação pelo novo ícone ainda com Internet ligada.</li>
+        <li>Esperar 20–30 segundos e abrir pelo menos um preset.</li>
+        <li>Fechar a aplicação, ativar <strong>Modo avião</strong> e abrir novamente pelo ícone.</li>
       </ol>
-      <p class="hint">Abrir só o ficheiro <code>index.html</code> pode tocar som, mas normalmente não ativa PWA/offline completo.</p>
+      <p class="hint">Se abrir e mostrar os presets em modo avião, ficou disponível offline. A Internet só é necessária para o primeiro carregamento e para futuras atualizações.</p>
     </details>
   </main>
 
   <footer>
-    <p>Descrições simbólicas/subjetivas fornecidas pelo utilizador. Esta app apenas gera áudio.</p>
+    <p>v3 — Paleta escura preto/antracite com acento ouro-sândalo. Descrições simbólicas/subjetivas; esta app apenas gera áudio.</p>
   </footer>
 
   <script src="presets.js"></script>
