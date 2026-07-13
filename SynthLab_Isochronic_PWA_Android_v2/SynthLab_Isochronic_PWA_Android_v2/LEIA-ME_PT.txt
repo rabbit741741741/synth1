@@ -1,6 +1,12 @@
 SynthLab Isochronic PWA Android v2
 ===================================
+NOTA IMPORTANTE
 
+Os presets Solfeggio/isocrónicos são mapeamentos simbólicos, subjetivos e experimentais.
+
+Esta aplicação gera áudio para exploração sonora, relaxamento, meditação e estudo de frequências. Não é um dispositivo médico, não diagnostica, não trata, não cura e não previne doenças.
+
+Os presets não substituem aconselhamento médico, psicológico ou terapêutico profissional. Use sempre volume baixo e interrompa a utilização se sentir desconforto.
 Esta é uma versão Web/PWA do SynthLab para Android/Chrome.
 Não é APK. Não instala apps de origem desconhecida.
 
