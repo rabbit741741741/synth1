@@ -1,4 +1,4 @@
-SynthLab Isochronic PWA Android v3
+SynthLab Isochronic PWA Android v4
 ===================================
 
 NOTA IMPORTANTE
@@ -31,13 +31,14 @@ O que inclui
 - Exportar WAV.
 - Manifesto PWA e service worker para funcionamento offline depois de alojada em HTTPS.
 
-Novidade v3
+Novidade v4
 -----------
-- Paleta visual escura para meditação: preto, antracite, ouro-sândalo fosco e verde esmeralda.
-- Remoção do aspeto azul/ciano neon.
-- Canal ativo destacado a ouro; canal inativo com opacidade reduzida.
-- Secção Android atualizada com as opções reais: Instalar app, Criar atalho, Adicionar ao ecrã principal ou Adicionar à página inicial.
-- Nota sobre presets dentro da app e neste documento.
+- Paleta visual escura neutralizada para reduzir saturação visual.
+- Dourado removido de textos, botões, caixas e setas por padrão.
+- Dourado reservado aos sliders e ao contorno de foco dos campos editados.
+- Verde esmeralda reservado para ativação/checkboxes e para a borda do botão Exportar WAV.
+- Canal inativo continua com opacidade reduzida.
+- Mantém a nota sobre presets dentro da app e neste documento.
 
 Como testar no computador
 -------------------------
