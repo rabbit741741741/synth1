@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="SynthLab Isochronic PWA v5: gerador leve de frequências, pulsos isocrónicos e presets Solfeggio para Android/Chrome, com paleta visual neutralizada." />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <title>SynthLab Isochronic</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <h1>SynthLab Isochronic</h1>
+      <p class="subtitle">Frequências + pulsos isocrónicos, com presets guiados</p>
+    </div>
+    <span class="pill" id="installState">Web/PWA</span>
+  </header>
+
+  <main>
+    <details class="notice">
+      <summary>Nota sobre os presets</summary>
+      <p>
+        Os presets Solfeggio/isocrónicos são mapeamentos simbólicos, subjetivos e experimentais.
+        Esta aplicação gera áudio para exploração sonora, relaxamento, meditação e estudo de frequências.
+        Não é um dispositivo médico, não diagnostica, não trata, não cura e não previne doenças.
+        Os presets não substituem aconselhamento médico, psicológico ou terapêutico profissional.
+        Use volume baixo e interrompa a utilização se sentir desconforto.
+      </p>
+    </details>
+
+    <section class="status-card" aria-live="polite">
+      <div class="status-topline">
+        <strong>A OUVIR AGORA</strong>
+        <span id="engineState" class="state-off">Parado</span>
+      </div>
+      <div id="nowSummary" class="now-summary">Nenhum som ativo.</div>
+      <div class="main-controls">
+        <button id="playStop" class="primary">Iniciar</button>
+        <label class="inline-control">Volume
+          <input id="masterVolume" type="range" min="0" max="100" value="25" />
+          <span id="masterLabel">25%</span>
+        </label>
+      </div>
+      <p class="safety-note">Comece com volume baixo. Presets simbólicos/subjetivos; não é tratamento médico nem gerador calibrado.</p>
+    </section>
+
+    <section class="card">
+      <h2>Preset guiado</h2>
+      <p class="hint">Escolha uma frequência base e um pulso. A app aplica a combinação ao canal que escolher.</p>
+      <div class="grid two">
+        <label>Frequência Solfeggio
+          <select id="baseSelect"></select>
+        </label>
+        <label>Pulso isocrónico
+          <select id="pulseSelect"></select>
+        </label>
+      </div>
+      <label>Modo de funcionamento
+        <select id="modeSelect">
+          <option value="continuous_plus_pulse">Tom contínuo + pulso acrescentado</option>
+          <option value="pulse_base">Pulsar o tom base</option>
+        </select>
+      </label>
+      <div class="button-row">
+        <button id="applySingle">Aplicar como som único</button>
+        <button id="applyCh1">Aplicar ao canal 1</button>
+        <button id="applyCh2">Aplicar ao canal 2</button>
+      </div>
+      <div class="explain-box">
+        <div id="presetTitle" class="preset-title"></div>
+        <div id="presetShort" class="preset-short"></div>
+        <details>
+          <summary>Mostrar explicação completa</summary>
+          <p id="presetFull"></p>
+        </details>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Canais de som</h2>
+      <p class="hint">Use um canal para algo simples. Abra o canal 2 apenas quando quiser misturar outra frequência.</p>
+      <div id="channels"></div>
+    </section>
+
+    <details class="card details-card export-card">
+      <summary>Exportar WAV e guardar estado</summary>
+      <div class="grid two padded-top">
+        <label>Duração WAV (s)
+          <input id="wavDuration" type="number" min="1" max="600" step="1" value="30" />
+        </label>
+        <label>Nome do ficheiro
+          <input id="wavName" type="text" value="synthlab_isochronic.wav" />
+        </label>
+      </div>
+      <div class="button-row">
+        <button id="exportWav">Exportar WAV</button>
+        <button id="saveState">Guardar estado</button>
+        <button id="loadState">Carregar estado</button>
+      </div>
+      <p class="hint">A exportação em telemóveis pode demorar alguns segundos. Para ficheiros longos, use durações moderadas.</p>
+    </details>
+
+    <details class="card details-card">
+      <summary>Como instalar no Android</summary>
+      <ol>
+        <li>Abrir o link da aplicação no <strong>Chrome Android</strong>, com Internet ligada.</li>
+        <li>Esperar que a aplicação carregue completamente.</li>
+        <li>Abrir o menu do Chrome nos três pontos <strong>⋮</strong>.</li>
+        <li>Escolher a opção que aparecer: <strong>Instalar app</strong>, <strong>Criar atalho</strong>, <strong>Adicionar ao ecrã principal</strong> ou <strong>Adicionar à página inicial</strong>.</li>
+        <li>Confirmar a criação do ícone.</li>
+        <li>Abrir a aplicação pelo novo ícone ainda com Internet ligada.</li>
+        <li>Esperar 20–30 segundos e abrir pelo menos um preset.</li>
+        <li>Fechar a aplicação, ativar <strong>Modo avião</strong> e abrir novamente pelo ícone.</li>
+      </ol>
+      <p class="hint">Se abrir e mostrar os presets em modo avião, ficou disponível offline. A Internet só é necessária para o primeiro carregamento e para futuras atualizações.</p>
+    </details>
+  </main>
+
+  <footer>
+    <p>v5 — Paleta escura neutralizada + 852 Hz: dourado só nos sliders/foco e verde em ativação/exportação. Descrições simbólicas/subjetivas; esta app apenas gera áudio.</p>
+  </footer>
+
+  <script src="presets.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
