@@ -1,4 +1,4 @@
-SynthLab Isochronic PWA Android v4
+SynthLab Isochronic PWA Android v5
 ===================================
 
 NOTA IMPORTANTE
@@ -22,14 +22,19 @@ O que inclui
   2) Tom contínuo + pulso acrescentado
 - Duty cycle / duração do pulso.
 - ADSR do pulso.
-- 56 presets guiados:
-  174, 285, 396, 417, 528, 639, 741, 963 Hz
+- 63 presets guiados:
+  174, 285, 396, 417, 528, 639, 741, 852, 963 Hz
   combinados com Coerência cardíaca 0.1 Hz, Turiya 0.5 Hz, Delta 2 Hz, Theta 6 Hz,
   Alpha 10 Hz, Beta 15 Hz e Gamma 40 Hz.
 - Explicação curta visível e explicação completa recolhida em "Mostrar explicação completa".
 - Guardar/carregar estado no browser.
 - Exportar WAV.
 - Manifesto PWA e service worker para funcionamento offline depois de alojada em HTTPS.
+
+Novidade v5
+-----------
+- Acrescentada a frequência Solfeggio 852 Hz aos presets guiados.
+- Catálogo atualizado de 56 para 63 presets: 9 frequências base × 7 pulsos.
 
 Novidade v4
 -----------

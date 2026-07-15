@@ -253,6 +253,29 @@ window.PRESET_BASES = {
       "coerencia": "Purificação mental e alinhamento coração-garganta: no mapeamento fornecido, o pulso de 0.1 Hz oferece uma base de estabilidade emocional, enquanto os 741 Hz são associados a expressão, clareza e desbloqueio da comunicação. A combinação é apresentada como apoio simbólico para expressão honesta, escrita, fala ou criação artística."
     }
   },
+
+  "852": {
+    "label": "852 Hz — Intuição, visão interior e discernimento",
+    "intro": "Usada no mapeamento para intuição, visão interior, discernimento e silêncio mental. As descrições são simbólicas/subjetivas e não validação médica.",
+    "short": {
+      "turiya": "Turiya: silêncio interior e observação antes do pensamento.",
+      "delta": "Delta: repouso profundo com presença subtil.",
+      "theta": "Theta: intuição, imaginação e visão interior.",
+      "alpha": "Alpha: contemplação calma e clareza percetiva.",
+      "beta": "Beta: foco lúcido sem excesso de tensão mental.",
+      "gamma": "Gamma: discernimento rápido e integração de padrões.",
+      "coerencia": "Ciclo de 10 s para estabilizar atenção, intuição e presença." 
+    },
+    "full": {
+      "turiya": "No mapeamento experiencial do SynthLab, 852 Hz representa visão interior e retorno à perceção silenciosa. Com pulso Turiya/Epsilon de 0.5 Hz, a combinação é pensada para apoiar o estado de testemunha: menos narrativa mental, mais presença e escuta do espaço antes do pensamento surgir. Não é prova neurocientífica nem promessa terapêutica.",
+      "delta": "Com pulso Delta de 2 Hz, os 852 Hz são usados como camada subtil de orientação interior durante repouso profundo. A intenção simbólica é manter uma sensação de presença tranquila sem estimular demasiado a mente. Deve ser usado com volume baixo, especialmente à noite.",
+      "theta": "Com pulso Theta de 6 Hz, os 852 Hz formam um preset orientado para visualização, imaginação e intuição. A ideia experiencial é favorecer um estado recetivo, onde imagens internas, memória simbólica e perceção subtil possam ser observadas sem esforço.",
+      "alpha": "Com pulso Alpha de 10 Hz, os 852 Hz são usados para contemplação calma, leitura intuitiva ou meditação leve de olhos abertos. A intenção é criar clareza sem tensão, mantendo a atenção desperta mas não agressiva.",
+      "beta": "Com pulso Beta de 15 Hz, os 852 Hz são apresentados como apoio simbólico a foco lúcido, decisão e discernimento. A combinação deve permanecer suave para evitar excesso de estimulação; a função é orientar a atenção, não forçar produtividade.",
+      "gamma": "Com pulso Gamma de 40 Hz, os 852 Hz são usados como preset de integração rápida e reconhecimento de padrões. Por ser uma combinação mais intensa, deve ser tratada como modo avançado, com volume baixo e sessões curtas.",
+      "coerencia": "Com pulso de coerência cardíaca de 0.1 Hz, os 852 Hz são usados para estabilizar a atenção num ciclo lento de 10 segundos. A intenção simbólica é unir presença corporal, respiração lenta e visão interior, criando uma ponte entre calma fisiológica subjetiva e discernimento contemplativo. Não substitui cuidados médicos ou psicológicos."
+    }
+  },
   "963": {
     "label": "963 Hz — Consciência e contemplação",
     "intro": "Usada no mapeamento para contemplação, silêncio e estados espirituais. As descrições são simbólicas/subjetivas e não validação médica.",
