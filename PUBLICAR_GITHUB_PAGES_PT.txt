@@ -45,4 +45,4 @@ Notas
 - Esta PWA não precisa de servidor próprio nem base de dados.
 - Para evitar erro 404, faça upload dos ficheiros soltos na raiz do repositório.
 - Não carregue apenas a pasta-mãe inteira.
-- A versão v6 muda o cache do service worker, para facilitar atualização face à v5.
+- A versão v6.1 muda o cache do service worker, para facilitar atualização face à v5.

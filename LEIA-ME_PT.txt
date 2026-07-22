@@ -1,4 +1,4 @@
-SynthLab Isochronic PWA Android v6
+SynthLab Isochronic PWA Android v6.1
 ===================================
 
 NOTA IMPORTANTE
@@ -34,7 +34,7 @@ O que inclui
 - Exportar WAV.
 - Manifesto PWA e service worker para funcionamento offline depois de alojada em HTTPS.
 
-Novidade v6
+Novidade v6.1
 -----------
 - Foi adicionado um temporizador opcional.
 - Por defeito, o som toca indefinidamente até o utilizador carregar em Parar.

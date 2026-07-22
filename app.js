@@ -1,4 +1,4 @@
-/* SynthLab Isochronic PWA v6 — temporizador opcional + sequência programada. */
+/* SynthLab Isochronic PWA v6.1 — temporizador opcional + sequência programada + cache-busting. */
 const SR = 44100;
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
@@ -860,6 +860,6 @@ function escapeHtml(str) {
 
 function registerServiceWorker() {
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("service-worker.js").catch(err => console.warn("SW não registado:", err));
+    navigator.serviceWorker.register("service-worker.js?v=6_1").catch(err => console.warn("SW não registado:", err));
   }
 }
