@@ -4,12 +4,12 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#000000" />
-  <meta name="description" content="SynthLab Isochronic PWA v6.2: gerador leve de frequências, pulsos isocrónicos, temporizador opcional e sequência programada de combinações." />
-  <link rel="manifest" href="manifest.json?v=6_1" />
-  <link rel="icon" href="icons/icon.svg?v=6_1" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="icons/icon-192.png?v=6_1" />
+  <meta name="description" content="SynthLab Isochronic PWA v6.4: gerador leve de frequências, pulsos isocrónicos, temporizador opcional e presets de sequências programadas." />
+  <link rel="manifest" href="manifest.json?v=6_4" />
+  <link rel="icon" href="icons/icon.svg?v=6_4" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png?v=6_4" />
   <title>SynthLab Isochronic</title>
-  <link rel="stylesheet" href="style.css?v=6_1" />
+  <link rel="stylesheet" href="style.css?v=6_4" />
 </head>
 <body>
   <header class="app-header">
@@ -17,7 +17,7 @@
       <h1>SynthLab Isochronic</h1>
       <p class="subtitle">Frequências + pulsos isocrónicos, agora com temporizador e sequências</p>
     </div>
-    <span class="pill" id="installState">v6.2 Web/PWA</span>
+    <span class="pill" id="installState">v6.4 Web/PWA</span>
   </header>
 
   <main>
@@ -63,7 +63,7 @@
         </div>
       </div>
 
-      <p class="safety-note"><strong>v6.2 carregada.</strong> Por defeito o som toca sem limite. Só para automaticamente quando o temporizador está ativo ou quando é iniciada uma sequência programada.</p>
+      <p class="safety-note"><strong>v6.4 carregada.</strong> Por defeito o som toca sem limite. Só para automaticamente quando o temporizador está ativo ou quando é iniciada uma sequência programada.</p>
     </section>
 
     <section class="card">
@@ -108,8 +108,16 @@
       <summary>Sequência programada</summary>
       <p class="hint">
         Para sessões em etapas: cada linha define frequência base, pulso e duração. Exemplo incluído:
-        20 min de 285 Hz + 2 Hz, seguido de 8 h de 582 Hz + 2 Hz.
+        Escolha um preset de sequência ou edite manualmente cada etapa. O campo Pulso aceita decimais: 0.1, 0.5 ou 0,1 / 0,5.
       </p>
+
+      <div class="sequence-preset-row">
+        <label>Preset de sequência
+          <select id="sequencePresetSelect"></select>
+        </label>
+        <button id="loadSequencePreset" type="button">Carregar preset</button>
+      </div>
+      <p id="sequencePresetDesc" class="hint sequence-preset-desc"></p>
       <div id="sequenceRows" class="sequence-rows"></div>
       <div class="button-row">
         <button id="addSequenceFromPreset">Adicionar preset atual</button>
@@ -158,10 +166,10 @@
   </main>
 
   <footer>
-    <p>v6.2 — Temporizador opcional + sequência programada. Por defeito, a reprodução é indefinida. Descrições simbólicas/subjetivas; esta app apenas gera áudio.</p>
+    <p>v6.4 — Temporizador opcional + presets de sequência programada. Por defeito, a reprodução é indefinida. Descrições simbólicas/subjetivas; esta app apenas gera áudio.</p>
   </footer>
 
-  <script src="presets.js?v=6_1"></script>
-  <script src="app.js?v=6_1"></script>
+  <script src="presets.js?v=6_4"></script>
+  <script src="app.js?v=6_4"></script>
 </body>
 </html>

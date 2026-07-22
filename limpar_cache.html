@@ -14,10 +14,10 @@
 <body>
   <div class="box">
     <h1>SynthLab — limpar versão antiga</h1>
-    <p>Esta página remove service workers, caches e estado local antigos desta PWA e depois abre a versão v6.2.</p>
+    <p>Esta página remove service workers, caches e estado local antigos desta PWA e depois abre a versão v6.4.</p>
     <p id="status" class="warn">A limpar...</p>
     <button id="again">Limpar novamente</button>
-    <a href="index.html?v=6_2_manual">Abrir v6.2 manualmente</a>
+    <a href="index.html?v=6_3_manual">Abrir v6.4 manualmente</a>
   </div>
   <script>
     async function clearSynthLab() {
@@ -33,11 +33,11 @@
         }
         try { localStorage.clear(); } catch(e) {}
         try { sessionStorage.clear(); } catch(e) {}
-        status.textContent = 'Limpeza concluída. A abrir v6.2...';
+        status.textContent = 'Limpeza concluída. A abrir v6.4...';
         status.className = 'ok';
-        setTimeout(() => { location.href = 'index.html?v=6_2_' + Date.now(); }, 900);
+        setTimeout(() => { location.href = 'index.html?v=6_3_' + Date.now(); }, 900);
       } catch (err) {
-        status.textContent = 'Não consegui limpar tudo automaticamente. Usa o botão para abrir a v6.2 manualmente.';
+        status.textContent = 'Não consegui limpar tudo automaticamente. Usa o botão para abrir a v6.4 manualmente.';
         console.error(err);
       }
     }

@@ -45,10 +45,16 @@ Notas
 - Esta PWA não precisa de servidor próprio nem base de dados.
 - Para evitar erro 404, faça upload dos ficheiros soltos na raiz do repositório.
 - Não carregue apenas a pasta-mãe inteira.
-- A versão v6.1 muda o cache do service worker, para facilitar atualização face à v5.
+- A versão v6.4 muda o cache do service worker, para facilitar atualização face à v5.
 
 
-ATUALIZAÇÃO v6.2 — SE A PÁGINA CONTINUAR ANTIGA
+ATUALIZAÇÃO v6.4 — SE A PÁGINA CONTINUAR ANTIGA
 1. Depois do upload e commit, abra: https://SEU-UTILIZADOR.github.io/SEU-REPOSITORIO/limpar_cache.html
 2. A página remove caches/service workers antigos e abre index.html?v=6_2.
 3. Só depois volte a instalar/adicionar a app ao ecrã inicial.
+
+
+ATUALIZAÇÃO v6.4
+- Corrige a introdução de pulsos decimais nas sequências.
+- O campo Pulso aceita 0.1, 0.5 e também 0,1 / 0,5 em teclados portugueses.
+- Abrir limpar_cache.html depois do upload para remover versões antigas da PWA.

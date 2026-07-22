@@ -1,4 +1,4 @@
-SynthLab Isochronic PWA Android v6.1
+SynthLab Isochronic PWA Android v6.4
 ===================================
 
 NOTA IMPORTANTE
@@ -34,7 +34,7 @@ O que inclui
 - Exportar WAV.
 - Manifesto PWA e service worker para funcionamento offline depois de alojada em HTTPS.
 
-Novidade v6.1
+Novidade v6.4
 -----------
 - Foi adicionado um temporizador opcional.
 - Por defeito, o som toca indefinidamente até o utilizador carregar em Parar.
@@ -127,3 +127,19 @@ Limitações
 - Para sessões de muitas horas, use bateria suficiente, ecrã com brilho baixo e teste antes.
 - Quando online, o Chrome pode contactar o GitHub Pages para verificar/carregar ficheiros da PWA.
 - Para garantir ausência de ligação durante o uso, usar em Modo avião.
+
+
+ATUALIZAÇÃO v6.4
+- Corrige a introdução de pulsos decimais nas sequências.
+- O campo Pulso aceita 0.1, 0.5 e também 0,1 / 0,5 em teclados portugueses.
+- Abrir limpar_cache.html depois do upload para remover versões antigas da PWA.
+
+
+ATUALIZAÇÃO v6.4
+- Acrescentados presets de sequência programada:
+  1) Sequência Noturna Alargada — foco 528 Hz;
+  2) Reset de Ansiedade e Ancoragem;
+  3) Foco Profundo e Escrita Crítica;
+  4) Meditação de Transição Cósmica.
+- O campo Pulso nas sequências aceita decimais com ponto ou vírgula: 0.1, 0.5, 0,1 e 0,5.
+- A interface mantém as sequências recolhidas para evitar overcrowding visual.

@@ -1,11 +1,11 @@
-const CACHE_NAME = 'synthlab-isochronic-pwa-v6-2-timer-sequence-reset';
+const CACHE_NAME = 'synthlab-isochronic-pwa-v6-4-sequence-presets-reset';
 const ASSETS = [
   './',
   './index.html',
-  './style.css?v=6_2',
-  './presets.js?v=6_2',
-  './app.js?v=6_2',
-  './manifest.json?v=6_2',
+  './style.css?v=6_4',
+  './presets.js?v=6_4',
+  './app.js?v=6_4',
+  './manifest.json?v=6_4',
   './icons/icon.svg',
   './icons/icon-192.png',
   './icons/icon-512.png'

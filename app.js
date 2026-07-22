@@ -1,6 +1,16 @@
-/* SynthLab Isochronic PWA v6.2 — temporizador opcional + sequência programada + reset de cache. */
+/* SynthLab Isochronic PWA v6.4 — decimais nos pulsos + presets de sequências programadas. */
 const SR = 44100;
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+// Aceita decimais com ponto ou vírgula e não estraga a escrita intermédia
+// em telemóveis/Chrome (ex.: 0.1, 0,1, 0.5, 0,5).
+function parseDecimal(value, fallback = 0) {
+  if (typeof value === "number") return Number.isFinite(value) ? value : fallback;
+  const raw = String(value ?? "").trim().replace(",", ".");
+  if (raw === "" || raw === "." || raw === "," || raw === "-" || raw === "-.") return fallback;
+  const n = Number(raw);
+  return Number.isFinite(n) ? n : fallback;
+}
 
 const defaultChannel = (name) => ({
   name,
@@ -44,6 +54,48 @@ const defaultSequenceRows = () => ([
   },
 ]);
 
+const SEQUENCE_PRESETS = [
+  {
+    id: "noturna_528",
+    name: "Sequência Noturna Alargada — foco 528 Hz",
+    desc: "Sono/transe inicial e madrugada prolongada: 30 min alívio físico, 3 h silêncio/transe, 5 h base 528 Hz + Delta.",
+    rows: [
+      { label: "Alívio físico inicial", freq: 174, pulseHz: 2, hours: 0, minutes: 30, mode: "continuous_plus_pulse", level: 38 },
+      { label: "Silêncio e transe", freq: 285, pulseHz: 0.5, hours: 3, minutes: 0, mode: "continuous_plus_pulse", level: 32 },
+      { label: "Regeneração longa e vitalidade", freq: 528, pulseHz: 2, hours: 5, minutes: 0, mode: "continuous_plus_pulse", level: 30 },
+    ],
+  },
+  {
+    id: "reset_ansiedade",
+    name: "Reset de Ansiedade e Ancoragem",
+    desc: "Descer de hiperalerta/pânico para presença corporal: Alpha inicial, coerência lenta e presença intuitiva sem pensamento.",
+    rows: [
+      { label: "Suavizar o ritmo mental", freq: 396, pulseHz: 10, hours: 0, minutes: 5, mode: "continuous_plus_pulse", level: 45 },
+      { label: "Sincronizar respiração lenta", freq: 174, pulseHz: 0.1, hours: 0, minutes: 10, mode: "continuous_plus_pulse", level: 38 },
+      { label: "Intuição e presença sem pensamento", freq: 852, pulseHz: 6, hours: 0, minutes: 10, mode: "continuous_plus_pulse", level: 38 },
+    ],
+  },
+  {
+    id: "foco_escrita",
+    name: "Foco Profundo e Escrita Crítica",
+    desc: "Bloco de trabalho estruturado: clareza inicial, foco ativo prolongado e pico final de clareza experimental.",
+    rows: [
+      { label: "Clareza inicial e organização", freq: 741, pulseHz: 10, hours: 0, minutes: 10, mode: "continuous_plus_pulse", level: 42 },
+      { label: "Foco ativo e escrita constante", freq: 741, pulseHz: 15, hours: 0, minutes: 40, mode: "continuous_plus_pulse", level: 45 },
+      { label: "Hiper-foco experimental", freq: 963, pulseHz: 40, hours: 0, minutes: 10, mode: "continuous_plus_pulse", level: 30 },
+    ],
+  },
+  {
+    id: "transicao_cosmica",
+    name: "Meditação de Transição Cósmica",
+    desc: "Sessão curta para mudança de padrões e contemplação: 417 Hz + Theta seguido de 963 Hz + Turiya.",
+    rows: [
+      { label: "Mudança de padrões e subconsciente", freq: 417, pulseHz: 6, hours: 0, minutes: 15, mode: "continuous_plus_pulse", level: 40 },
+      { label: "Contemplação, silêncio e testemunha", freq: 963, pulseHz: 0.5, hours: 0, minutes: 15, mode: "continuous_plus_pulse", level: 34 },
+    ],
+  },
+];
+
 let state = {
   running: false,
   master: 0.25,
@@ -76,13 +128,14 @@ const BIND_IDS = [
   "baseSelect", "pulseSelect", "modeSelect", "applySingle", "applyCh1", "applyCh2",
   "presetTitle", "presetShort", "presetFull", "channels",
   "timerEnabled", "timerHours", "timerMinutes", "timerStatus", "timerFields", "timerStrip",
-  "sequenceRows", "addSequenceFromPreset", "addSequenceCustom", "startSequence", "stopSequence", "sequenceLoop", "sequenceStatus",
+  "sequenceRows", "sequencePresetSelect", "loadSequencePreset", "sequencePresetDesc", "addSequenceFromPreset", "addSequenceCustom", "startSequence", "stopSequence", "sequenceLoop", "sequenceStatus",
   "exportWav", "wavDuration", "wavName", "saveState", "loadState", "installState"
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
   bindEls();
   buildPresetSelectors();
+  buildSequencePresetSelector();
   buildChannelUI();
   buildSequenceUI();
   loadStateFromStorage(false);
@@ -116,6 +169,8 @@ function bindEls() {
   els.timerHours.addEventListener("input", onTimerInput);
   els.timerMinutes.addEventListener("input", onTimerInput);
 
+  els.sequencePresetSelect.addEventListener("change", updateSequencePresetDescription);
+  els.loadSequencePreset.addEventListener("click", loadSelectedSequencePreset);
   els.addSequenceFromPreset.addEventListener("click", addSequenceFromPreset);
   els.addSequenceCustom.addEventListener("click", addSequenceCustom);
   els.startSequence.addEventListener("click", startSequence);
@@ -141,6 +196,39 @@ function buildPresetSelectors() {
   els.pulseSelect.value = "alpha";
 }
 
+
+function buildSequencePresetSelector() {
+  if (!els.sequencePresetSelect) return;
+  els.sequencePresetSelect.innerHTML = SEQUENCE_PRESETS
+    .map(p => `<option value="${p.id}">${escapeHtml(p.name)}</option>`)
+    .join("");
+  els.sequencePresetSelect.value = SEQUENCE_PRESETS[0]?.id || "";
+  updateSequencePresetDescription();
+}
+
+function updateSequencePresetDescription() {
+  if (!els.sequencePresetDesc) return;
+  const preset = SEQUENCE_PRESETS.find(p => p.id === els.sequencePresetSelect.value);
+  els.sequencePresetDesc.textContent = preset ? preset.desc : "";
+}
+
+function cloneSequenceRows(rows) {
+  return rows.map(r => cleanSequenceRow({ ...r }));
+}
+
+function loadSelectedSequencePreset() {
+  if (state.sequence.running) {
+    alert("Pare a sequência antes de trocar de preset.");
+    return;
+  }
+  const preset = SEQUENCE_PRESETS.find(p => p.id === els.sequencePresetSelect.value);
+  if (!preset) return;
+  state.sequence.rows = cloneSequenceRows(preset.rows);
+  buildSequenceUI();
+  updateUI();
+  saveStateToStorage(false);
+}
+
 function buildChannelUI() {
   els.channels.innerHTML = "";
   state.channels.forEach((ch, idx) => {
@@ -159,7 +247,7 @@ function buildChannelUI() {
         <summary>Editar este canal</summary>
         <div class="grid two">
           <label>Frequência base (Hz)
-            <input data-k="freq" data-i="${idx}" type="number" step="0.1" min="1" max="20000" />
+            <input data-k="freq" data-i="${idx}" type="text" inputmode="decimal" pattern="[0-9]+([\.,][0-9]+)?" />
           </label>
           <label>Forma de onda
             <select data-k="waveform" data-i="${idx}">
@@ -181,7 +269,7 @@ function buildChannelUI() {
         <label class="switch-row">Pulso isocrónico ativo <input data-k="pulseEnabled" data-i="${idx}" type="checkbox" /></label>
         <div class="grid two">
           <label>Frequência do pulso (Hz)
-            <input data-k="pulseHz" data-i="${idx}" type="number" step="0.01" min="0.05" max="80" />
+            <input data-k="pulseHz" data-i="${idx}" type="text" inputmode="decimal" pattern="[0-9]+([\.,][0-9]+)?" placeholder="0.1" />
           </label>
           <label>Modo do pulso
             <select data-k="pulseMode" data-i="${idx}">
@@ -233,10 +321,10 @@ function buildSequenceUI() {
           <input data-seq-k="label" data-seq-i="${idx}" type="text" />
         </label>
         <label>Frequência base (Hz)
-          <input data-seq-k="freq" data-seq-i="${idx}" type="number" min="1" max="20000" step="0.1" />
+          <input data-seq-k="freq" data-seq-i="${idx}" type="text" inputmode="decimal" pattern="[0-9]+([\.,][0-9]+)?" />
         </label>
         <label>Pulso (Hz)
-          <input data-seq-k="pulseHz" data-seq-i="${idx}" type="number" min="0.05" max="80" step="0.01" />
+          <input data-seq-k="pulseHz" data-seq-i="${idx}" type="text" inputmode="decimal" pattern="[0-9]+([\.,][0-9]+)?" placeholder="0.1" />
         </label>
         <label>Horas
           <input data-seq-k="hours" data-seq-i="${idx}" type="number" min="0" max="24" step="1" />
@@ -334,15 +422,15 @@ function applyPreset(idx, single) {
 }
 
 function applySequenceRowToSound(row) {
-  const pulse = getPulseDefaultsFromHz(Number(row.pulseHz));
+  const pulse = getPulseDefaultsFromHz(parseDecimal(row.pulseHz, 2));
   const ch = state.channels[0];
   ch.active = true;
-  ch.freq = clamp(Number(row.freq) || 528, 1, 20000);
+  ch.freq = clamp(parseDecimal(row.freq, 528), 1, 20000);
   ch.waveform = "sine";
   ch.level = clamp((Number(row.level) || 55) / 100, 0, 1);
   ch.pan = 0;
   ch.pulseEnabled = true;
-  ch.pulseHz = clamp(Number(row.pulseHz) || 2, 0.05, 80);
+  ch.pulseHz = clamp(parseDecimal(row.pulseHz, 2), 0.05, 80);
   ch.pulseMode = row.mode === "pulse_base" ? "pulse_base" : "continuous_plus_pulse";
   ch.intensity = 0.45;
   ch.duty = 50;
@@ -366,9 +454,11 @@ function onChannelInput(ev) {
     if (k === "level" || k === "intensity") ch[k] = v / 100;
     else if (k === "pan") ch[k] = v / 100;
     else ch[k] = v;
-  } else if (ev.target.type === "number") ch[k] = Number(ev.target.value);
+  } else if (k === "freq") ch[k] = parseDecimal(ev.target.value, ch[k]);
+  else if (k === "pulseHz") ch[k] = parseDecimal(ev.target.value, ch[k]);
+  else if (ev.target.type === "number") ch[k] = Number(ev.target.value);
   else ch[k] = ev.target.value;
-  updateUI(); saveStateToStorage(false);
+  updateUI({ preserveFocusedInput: true }); saveStateToStorage(false);
 }
 
 function onTimerInput(ev) {
@@ -383,9 +473,10 @@ function onSequenceInput(ev) {
   const k = ev.target.dataset.seqK;
   const row = state.sequence.rows[i];
   if (!row || !k) return;
-  if (ev.target.type === "number" || ev.target.type === "range") row[k] = Number(ev.target.value);
+  if (k === "freq" || k === "pulseHz") row[k] = parseDecimal(ev.target.value, row[k]);
+  else if (ev.target.type === "number" || ev.target.type === "range") row[k] = Number(ev.target.value);
   else row[k] = ev.target.value;
-  updateUI(); saveStateToStorage(false);
+  updateUI({ preserveFocusedInput: true }); saveStateToStorage(false);
 }
 
 function addSequenceFromPreset() {
@@ -425,7 +516,7 @@ function removeSequenceRow(idx) {
   buildSequenceUI(); updateUI(); saveStateToStorage(false);
 }
 
-function updateUI() {
+function updateUI({ preserveFocusedInput = false } = {}) {
   els.masterVolume.value = Math.round(state.master * 100);
   els.masterLabel.textContent = `${Math.round(state.master * 100)}%`;
   els.engineState.textContent = state.running ? (state.sequence.running ? "Sequência" : "A tocar") : "Parado";
@@ -447,6 +538,7 @@ function updateUI() {
     for (const el of document.querySelectorAll(`[data-i="${idx}"]`)) {
       const k = el.dataset.k;
       if (!(k in ch)) continue;
+      if (preserveFocusedInput && document.activeElement === el) continue;
       if (el.type === "checkbox") el.checked = !!ch[k];
       else if (el.type === "range") {
         if (k === "level" || k === "intensity") el.value = Math.round(ch[k] * 100);
@@ -477,6 +569,7 @@ function updateSequenceUIValues() {
     for (const el of document.querySelectorAll(`[data-seq-i="${idx}"]`)) {
       const k = el.dataset.seqK;
       if (!(k in row)) continue;
+      if (document.activeElement === el) continue;
       el.value = row[k];
     }
   });
@@ -744,12 +837,12 @@ function saveStateToStorage(show) {
     },
     channels: state.channels.map(c => ({...c, phase:0, pulsePhase:0, startedAtSample:0})),
   };
-  localStorage.setItem("synthlabIsoStateV6", JSON.stringify(serializable));
+  localStorage.setItem("synthlabIsoStateV64", JSON.stringify(serializable));
   if (show) alert("Estado guardado neste browser/telemóvel.");
 }
 
 function loadStateFromStorage(show) {
-  const raw = localStorage.getItem("synthlabIsoStateV6") || localStorage.getItem("synthlabIsoState");
+  const raw = localStorage.getItem("synthlabIsoStateV64") || localStorage.getItem("synthlabIsoStateV6") || localStorage.getItem("synthlabIsoState");
   if (!raw) { if (show) alert("Ainda não existe estado guardado."); return; }
   try {
     const obj = JSON.parse(raw);
@@ -779,8 +872,8 @@ function loadStateFromStorage(show) {
 function cleanSequenceRow(row) {
   return {
     label: String(row.label || "Etapa"),
-    freq: clamp(Number(row.freq) || 528, 1, 20000),
-    pulseHz: clamp(Number(row.pulseHz) || 2, 0.05, 80),
+    freq: clamp(parseDecimal(row.freq, 528), 1, 20000),
+    pulseHz: clamp(parseDecimal(row.pulseHz, 2), 0.05, 80),
     hours: clamp(Math.round(Number(row.hours) || 0), 0, 24),
     minutes: clamp(Math.round(Number(row.minutes) || 0), 0, 59),
     mode: row.mode === "pulse_base" ? "pulse_base" : "continuous_plus_pulse",
@@ -860,6 +953,6 @@ function escapeHtml(str) {
 
 function registerServiceWorker() {
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("service-worker.js?v=6_1").catch(err => console.warn("SW não registado:", err));
+    navigator.serviceWorker.register("service-worker.js?v=6_4").catch(err => console.warn("SW não registado:", err));
   }
 }
