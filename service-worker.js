@@ -1,4 +1,4 @@
-const CACHE_NAME = 'synthlab-isochronic-pwa-v5-852';
+const CACHE_NAME = 'synthlab-isochronic-pwa-v6-timer-sequence';
 const ASSETS = [
   './',
   './index.html',

@@ -1,4 +1,4 @@
-SynthLab Isochronic PWA Android v5
+SynthLab Isochronic PWA Android v6
 ===================================
 
 NOTA IMPORTANTE
@@ -27,9 +27,30 @@ O que inclui
   combinados com Coerência cardíaca 0.1 Hz, Turiya 0.5 Hz, Delta 2 Hz, Theta 6 Hz,
   Alpha 10 Hz, Beta 15 Hz e Gamma 40 Hz.
 - Explicação curta visível e explicação completa recolhida em "Mostrar explicação completa".
+- Temporizador opcional.
+- Reprodução indefinida por defeito.
+- Sequência programada de combinações frequência + pulso + duração.
 - Guardar/carregar estado no browser.
 - Exportar WAV.
 - Manifesto PWA e service worker para funcionamento offline depois de alojada em HTTPS.
+
+Novidade v6
+-----------
+- Foi adicionado um temporizador opcional.
+- Por defeito, o som toca indefinidamente até o utilizador carregar em Parar.
+- O temporizador só limita a duração quando a opção "Temporizador opcional" está selecionada.
+- Foi adicionada uma área recolhida para "Sequência programada", evitando sobrecarga visual na interface principal.
+- A sequência permite criar várias etapas. Cada etapa tem:
+  - nome;
+  - frequência base em Hz;
+  - pulso em Hz;
+  - duração em horas/minutos;
+  - nível;
+  - modo de pulso.
+- A sequência de exemplo incluída é:
+  1) 20 minutos de 285 Hz + 2 Hz;
+  2) 8 horas de 582 Hz + 2 Hz.
+- 582 Hz fica tratado como frequência personalizada. A app permite frequências fora da lista Solfeggio.
 
 Novidade v5
 -----------
@@ -44,6 +65,25 @@ Novidade v4
 - Verde esmeralda reservado para ativação/checkboxes e para a borda do botão Exportar WAV.
 - Canal inativo continua com opacidade reduzida.
 - Mantém a nota sobre presets dentro da app e neste documento.
+
+Como usar o temporizador
+------------------------
+1. Escolher o preset ou editar os canais.
+2. Deixar "Temporizador opcional" desligado para reprodução indefinida.
+3. Ligar "Temporizador opcional" apenas quando quiser limitar a duração.
+4. Definir horas/minutos.
+5. Carregar em Iniciar.
+6. A app para automaticamente no fim do tempo definido.
+
+Como usar a sequência programada
+--------------------------------
+1. Abrir "Sequência programada".
+2. Editar as linhas existentes ou adicionar uma linha nova.
+3. Definir frequência base, pulso e duração.
+4. Carregar em "Iniciar sequência".
+5. A app toca cada etapa pela duração definida e passa automaticamente para a próxima.
+6. Se "Repetir a sequência" estiver desligado, a app para no fim.
+7. Se "Repetir a sequência" estiver ligado, a sequência volta ao início.
 
 Como testar no computador
 -------------------------
@@ -76,12 +116,14 @@ Permissões e segurança
 - Não pede contactos, SMS, localização, câmara ou microfone.
 - Não usa bibliotecas externas nem CDN.
 - Não tem anúncios, contas ou login.
-- O som só começa depois do utilizador carregar em "Iniciar".
+- O som só começa depois do utilizador carregar em "Iniciar" ou "Iniciar sequência".
 - A exportação WAV fica no próprio dispositivo/browser.
 
 Limitações
 ----------
 - A precisão real depende do smartphone, DAC, browser, auscultadores/colunas.
 - Não é gerador de sinal calibrado.
+- Sequências muito longas dependem de o browser/sistema não suspender a app.
+- Para sessões de muitas horas, use bateria suficiente, ecrã com brilho baixo e teste antes.
 - Quando online, o Chrome pode contactar o GitHub Pages para verificar/carregar ficheiros da PWA.
 - Para garantir ausência de ligação durante o uso, usar em Modo avião.

@@ -17,6 +17,8 @@ Passos simples
    manifest.json
    service-worker.js
    icons/
+   LEIA-ME_PT.txt
+   PUBLICAR_GITHUB_PAGES_PT.txt
 4. No GitHub, abra:
    Settings → Pages
 5. Em "Build and deployment", escolha:
@@ -25,16 +27,22 @@ Passos simples
    Folder: /root
 6. Aguarde alguns minutos.
 7. Abra o link HTTPS fornecido pelo GitHub Pages no Chrome do Android.
-8. Menu ⋮ → Adicionar ao ecrã principal.
+8. Menu ⋮ → Instalar app / Adicionar ao ecrã principal.
+
+Atualizar versão anterior
+-------------------------
+- Substitua os ficheiros antigos pelos ficheiros desta pasta.
+- Faça Commit changes.
+- Aguarde o deploy terminar.
+- No telemóvel, abra a página com um sufixo temporário, por exemplo:
+  ?v=6
+- Abra a app uma vez com Internet para o service worker guardar a nova versão.
+- Depois teste em Modo avião.
 
 Notas
 -----
 - O GitHub Pages é apenas uma forma simples de alojar ficheiros estáticos.
 - Esta PWA não precisa de servidor próprio nem base de dados.
-- Para atualizar a app, substitua os ficheiros no repositório.
-
-
-Novidade v2: acrescentado pulso de Coerência cardíaca 0.1 Hz, criando 8 presets adicionais com ciclo de 10 segundos e ADSR longo/suave.
-
-
-NOTA v3: Para evitar erro 404, faça upload dos ficheiros soltos na raiz do repositório: index.html, style.css, app.js, presets.js, manifest.json, service-worker.js, icons/, LEIA-ME_PT.txt. Não carregue apenas a pasta-mãe inteira.
+- Para evitar erro 404, faça upload dos ficheiros soltos na raiz do repositório.
+- Não carregue apenas a pasta-mãe inteira.
+- A versão v6 muda o cache do service worker, para facilitar atualização face à v5.

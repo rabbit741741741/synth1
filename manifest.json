@@ -1,7 +1,7 @@
 {
   "name": "SynthLab Isochronic",
   "short_name": "SynthLab",
-  "description": "Gerador leve de frequências, pulsos isocrónicos, 63 presets e paleta escura neutralizada para Android/Chrome.",
+  "description": "Gerador leve de frequências Solfeggio, pulsos isocrónicos, temporizador opcional e sequências programadas.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

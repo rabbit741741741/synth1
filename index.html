@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#000000" />
-  <meta name="description" content="SynthLab Isochronic PWA v5: gerador leve de frequências, pulsos isocrónicos e presets Solfeggio para Android/Chrome, com paleta visual neutralizada." />
+  <meta name="description" content="SynthLab Isochronic PWA v6: gerador leve de frequências, pulsos isocrónicos, temporizador opcional e sequência programada de combinações." />
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="icons/icon-192.png" />
@@ -15,7 +15,7 @@
   <header class="app-header">
     <div>
       <h1>SynthLab Isochronic</h1>
-      <p class="subtitle">Frequências + pulsos isocrónicos, com presets guiados</p>
+      <p class="subtitle">Frequências + pulsos isocrónicos, agora com temporizador e sequências</p>
     </div>
     <span class="pill" id="installState">Web/PWA</span>
   </header>
@@ -45,7 +45,25 @@
           <span id="masterLabel">25%</span>
         </label>
       </div>
-      <p class="safety-note">Comece com volume baixo. Presets simbólicos/subjetivos; não é tratamento médico nem gerador calibrado.</p>
+
+      <div class="timer-strip" id="timerStrip">
+        <div class="timer-topline">
+          <label class="switch-row timer-switch">Temporizador opcional
+            <input id="timerEnabled" type="checkbox" />
+          </label>
+          <span id="timerStatus" class="timer-status">Desligado — reprodução indefinida.</span>
+        </div>
+        <div class="timer-fields" id="timerFields">
+          <label>Horas
+            <input id="timerHours" type="number" min="0" max="24" step="1" value="0" />
+          </label>
+          <label>Minutos
+            <input id="timerMinutes" type="number" min="0" max="59" step="1" value="20" />
+          </label>
+        </div>
+      </div>
+
+      <p class="safety-note">Por defeito o som toca sem limite. Só para automaticamente quando o temporizador está ativo ou quando é iniciada uma sequência programada.</p>
     </section>
 
     <section class="card">
@@ -86,6 +104,25 @@
       <div id="channels"></div>
     </section>
 
+    <details class="card details-card sequence-card">
+      <summary>Sequência programada</summary>
+      <p class="hint">
+        Para sessões em etapas: cada linha define frequência base, pulso e duração. Exemplo incluído:
+        20 min de 285 Hz + 2 Hz, seguido de 8 h de 582 Hz + 2 Hz.
+      </p>
+      <div id="sequenceRows" class="sequence-rows"></div>
+      <div class="button-row">
+        <button id="addSequenceFromPreset">Adicionar preset atual</button>
+        <button id="addSequenceCustom">Adicionar linha vazia</button>
+        <button id="startSequence" class="sequence-start">Iniciar sequência</button>
+        <button id="stopSequence">Parar sequência</button>
+      </div>
+      <label class="switch-row sequence-loop">Repetir a sequência quando chegar ao fim
+        <input id="sequenceLoop" type="checkbox" />
+      </label>
+      <p id="sequenceStatus" class="hint sequence-status">Sequência parada.</p>
+    </details>
+
     <details class="card details-card export-card">
       <summary>Exportar WAV e guardar estado</summary>
       <div class="grid two padded-top">
@@ -121,7 +158,7 @@
   </main>
 
   <footer>
-    <p>v5 — Paleta escura neutralizada + 852 Hz: dourado só nos sliders/foco e verde em ativação/exportação. Descrições simbólicas/subjetivas; esta app apenas gera áudio.</p>
+    <p>v6 — Temporizador opcional + sequência programada. Por defeito, a reprodução é indefinida. Descrições simbólicas/subjetivas; esta app apenas gera áudio.</p>
   </footer>
 
   <script src="presets.js"></script>
