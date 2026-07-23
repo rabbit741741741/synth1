@@ -1,0 +1,60 @@
+Publicar esta PWA no GitHub Pages
+=================================
+
+Objetivo: obter um link HTTPS do tipo:
+https://SEU_UTILIZADOR.github.io/synthlab-isochronic/
+
+Passos simples
+--------------
+1. Crie uma conta GitHub se ainda não tiver.
+2. Crie um novo repositório chamado, por exemplo:
+   synthlab-isochronic
+3. Faça upload de TODOS os ficheiros desta pasta:
+   index.html
+   style.css
+   app.js
+   presets.js
+   manifest.json
+   service-worker.js
+   icons/
+   LEIA-ME_PT.txt
+   PUBLICAR_GITHUB_PAGES_PT.txt
+4. No GitHub, abra:
+   Settings → Pages
+5. Em "Build and deployment", escolha:
+   Source: Deploy from a branch
+   Branch: main
+   Folder: /root
+6. Aguarde alguns minutos.
+7. Abra o link HTTPS fornecido pelo GitHub Pages no Chrome do Android.
+8. Menu ⋮ → Instalar app / Adicionar ao ecrã principal.
+
+Atualizar versão anterior
+-------------------------
+- Substitua os ficheiros antigos pelos ficheiros desta pasta.
+- Faça Commit changes.
+- Aguarde o deploy terminar.
+- No telemóvel, abra a página com um sufixo temporário, por exemplo:
+  ?v=6
+- Abra a app uma vez com Internet para o service worker guardar a nova versão.
+- Depois teste em Modo avião.
+
+Notas
+-----
+- O GitHub Pages é apenas uma forma simples de alojar ficheiros estáticos.
+- Esta PWA não precisa de servidor próprio nem base de dados.
+- Para evitar erro 404, faça upload dos ficheiros soltos na raiz do repositório.
+- Não carregue apenas a pasta-mãe inteira.
+- A versão v6.4 muda o cache do service worker, para facilitar atualização face à v5.
+
+
+ATUALIZAÇÃO v6.4 — SE A PÁGINA CONTINUAR ANTIGA
+1. Depois do upload e commit, abra: https://SEU-UTILIZADOR.github.io/SEU-REPOSITORIO/limpar_cache.html
+2. A página remove caches/service workers antigos e abre index.html?v=6_2.
+3. Só depois volte a instalar/adicionar a app ao ecrã inicial.
+
+
+ATUALIZAÇÃO v6.4
+- Corrige a introdução de pulsos decimais nas sequências.
+- O campo Pulso aceita 0.1, 0.5 e também 0,1 / 0,5 em teclados portugueses.
+- Abrir limpar_cache.html depois do upload para remover versões antigas da PWA.

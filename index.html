@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="SynthLab Isochronic PWA v6.4: gerador leve de frequências, pulsos isocrónicos, temporizador opcional e presets de sequências programadas." />
+  <link rel="manifest" href="manifest.json?v=6_4" />
+  <link rel="icon" href="icons/icon.svg?v=6_4" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png?v=6_4" />
+  <title>SynthLab Isochronic</title>
+  <link rel="stylesheet" href="style.css?v=6_4" />
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <h1>SynthLab Isochronic</h1>
+      <p class="subtitle">Frequências + pulsos isocrónicos, agora com temporizador e sequências</p>
+    </div>
+    <span class="pill" id="installState">v6.4 Web/PWA</span>
+  </header>
+
+  <main>
+    <details class="notice">
+      <summary>Nota sobre os presets</summary>
+      <p>
+        Os presets Solfeggio/isocrónicos são mapeamentos simbólicos, subjetivos e experimentais.
+        Esta aplicação gera áudio para exploração sonora, relaxamento, meditação e estudo de frequências.
+        Não é um dispositivo médico, não diagnostica, não trata, não cura e não previne doenças.
+        Os presets não substituem aconselhamento médico, psicológico ou terapêutico profissional.
+        Use volume baixo e interrompa a utilização se sentir desconforto.
+      </p>
+    </details>
+
+    <section class="status-card" aria-live="polite">
+      <div class="status-topline">
+        <strong>A OUVIR AGORA</strong>
+        <span id="engineState" class="state-off">Parado</span>
+      </div>
+      <div id="nowSummary" class="now-summary">Nenhum som ativo.</div>
+      <div class="main-controls">
+        <button id="playStop" class="primary">Iniciar</button>
+        <label class="inline-control">Volume
+          <input id="masterVolume" type="range" min="0" max="100" value="25" />
+          <span id="masterLabel">25%</span>
+        </label>
+      </div>
+
+      <div class="timer-strip" id="timerStrip">
+        <div class="timer-topline">
+          <label class="switch-row timer-switch">Temporizador opcional
+            <input id="timerEnabled" type="checkbox" />
+          </label>
+          <span id="timerStatus" class="timer-status">Desligado — reprodução indefinida.</span>
+        </div>
+        <div class="timer-fields" id="timerFields">
+          <label>Horas
+            <input id="timerHours" type="number" min="0" max="24" step="1" value="0" />
+          </label>
+          <label>Minutos
+            <input id="timerMinutes" type="number" min="0" max="59" step="1" value="20" />
+          </label>
+        </div>
+      </div>
+
+      <p class="safety-note"><strong>v6.4 carregada.</strong> Por defeito o som toca sem limite. Só para automaticamente quando o temporizador está ativo ou quando é iniciada uma sequência programada.</p>
+    </section>
+
+    <section class="card">
+      <h2>Preset guiado</h2>
+      <p class="hint">Escolha uma frequência base e um pulso. A app aplica a combinação ao canal que escolher.</p>
+      <div class="grid two">
+        <label>Frequência Solfeggio
+          <select id="baseSelect"></select>
+        </label>
+        <label>Pulso isocrónico
+          <select id="pulseSelect"></select>
+        </label>
+      </div>
+      <label>Modo de funcionamento
+        <select id="modeSelect">
+          <option value="continuous_plus_pulse">Tom contínuo + pulso acrescentado</option>
+          <option value="pulse_base">Pulsar o tom base</option>
+        </select>
+      </label>
+      <div class="button-row">
+        <button id="applySingle">Aplicar como som único</button>
+        <button id="applyCh1">Aplicar ao canal 1</button>
+        <button id="applyCh2">Aplicar ao canal 2</button>
+      </div>
+      <div class="explain-box">
+        <div id="presetTitle" class="preset-title"></div>
+        <div id="presetShort" class="preset-short"></div>
+        <details>
+          <summary>Mostrar explicação completa</summary>
+          <p id="presetFull"></p>
+        </details>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Canais de som</h2>
+      <p class="hint">Use um canal para algo simples. Abra o canal 2 apenas quando quiser misturar outra frequência.</p>
+      <div id="channels"></div>
+    </section>
+
+    <details class="card details-card sequence-card">
+      <summary>Sequência programada</summary>
+      <p class="hint">
+        Para sessões em etapas: cada linha define frequência base, pulso e duração. Exemplo incluído:
+        Escolha um preset de sequência ou edite manualmente cada etapa. O campo Pulso aceita decimais: 0.1, 0.5 ou 0,1 / 0,5.
+      </p>
+
+      <div class="sequence-preset-row">
+        <label>Preset de sequência
+          <select id="sequencePresetSelect"></select>
+        </label>
+        <button id="loadSequencePreset" type="button">Carregar preset</button>
+      </div>
+      <p id="sequencePresetDesc" class="hint sequence-preset-desc"></p>
+      <div id="sequenceRows" class="sequence-rows"></div>
+      <div class="button-row">
+        <button id="addSequenceFromPreset">Adicionar preset atual</button>
+        <button id="addSequenceCustom">Adicionar linha vazia</button>
+        <button id="startSequence" class="sequence-start">Iniciar sequência</button>
+        <button id="stopSequence">Parar sequência</button>
+      </div>
+      <label class="switch-row sequence-loop">Repetir a sequência quando chegar ao fim
+        <input id="sequenceLoop" type="checkbox" />
+      </label>
+      <p id="sequenceStatus" class="hint sequence-status">Sequência parada.</p>
+    </details>
+
+    <details class="card details-card export-card">
+      <summary>Exportar WAV e guardar estado</summary>
+      <div class="grid two padded-top">
+        <label>Duração WAV (s)
+          <input id="wavDuration" type="number" min="1" max="600" step="1" value="30" />
+        </label>
+        <label>Nome do ficheiro
+          <input id="wavName" type="text" value="synthlab_isochronic.wav" />
+        </label>
+      </div>
+      <div class="button-row">
+        <button id="exportWav">Exportar WAV</button>
+        <button id="saveState">Guardar estado</button>
+        <button id="loadState">Carregar estado</button>
+      </div>
+      <p class="hint">A exportação em telemóveis pode demorar alguns segundos. Para ficheiros longos, use durações moderadas.</p>
+    </details>
+
+    <details class="card details-card">
+      <summary>Como instalar no Android</summary>
+      <ol>
+        <li>Abrir o link da aplicação no <strong>Chrome Android</strong>, com Internet ligada.</li>
+        <li>Esperar que a aplicação carregue completamente.</li>
+        <li>Abrir o menu do Chrome nos três pontos <strong>⋮</strong>.</li>
+        <li>Escolher a opção que aparecer: <strong>Instalar app</strong>, <strong>Criar atalho</strong>, <strong>Adicionar ao ecrã principal</strong> ou <strong>Adicionar à página inicial</strong>.</li>
+        <li>Confirmar a criação do ícone.</li>
+        <li>Abrir a aplicação pelo novo ícone ainda com Internet ligada.</li>
+        <li>Esperar 20–30 segundos e abrir pelo menos um preset.</li>
+        <li>Fechar a aplicação, ativar <strong>Modo avião</strong> e abrir novamente pelo ícone.</li>
+      </ol>
+      <p class="hint">Se abrir e mostrar os presets em modo avião, ficou disponível offline. A Internet só é necessária para o primeiro carregamento e para futuras atualizações.</p>
+    </details>
+  </main>
+
+  <footer>
+    <p>v6.4 — Temporizador opcional + presets de sequência programada. Por defeito, a reprodução é indefinida. Descrições simbólicas/subjetivas; esta app apenas gera áudio.</p>
+  </footer>
+
+  <script src="presets.js?v=6_4"></script>
+  <script src="app.js?v=6_4"></script>
+</body>
+</html>

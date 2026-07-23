@@ -1,0 +1,145 @@
+SynthLab Isochronic PWA Android v6.4
+===================================
+
+NOTA IMPORTANTE
+---------------
+Os presets Solfeggio/isocrónicos são mapeamentos simbólicos, subjetivos e experimentais.
+
+Esta aplicação gera áudio para exploração sonora, relaxamento, meditação e estudo de frequências. Não é um dispositivo médico, não diagnostica, não trata, não cura e não previne doenças.
+
+Os presets não substituem aconselhamento médico, psicológico ou terapêutico profissional.
+
+Use sempre volume baixo. Interrompa a utilização se sentir desconforto, tonturas, dor de cabeça, ansiedade, irritação auditiva ou qualquer reação desagradável.
+
+O que inclui
+------------
+- Gerador de frequências no browser usando Web Audio API.
+- 2 canais de som editáveis.
+- Frequência base em Hz, forma de onda, volume e panorama por canal.
+- Pulso isocrónico por canal.
+- Dois modos:
+  1) Pulsar o tom base
+  2) Tom contínuo + pulso acrescentado
+- Duty cycle / duração do pulso.
+- ADSR do pulso.
+- 63 presets guiados:
+  174, 285, 396, 417, 528, 639, 741, 852, 963 Hz
+  combinados com Coerência cardíaca 0.1 Hz, Turiya 0.5 Hz, Delta 2 Hz, Theta 6 Hz,
+  Alpha 10 Hz, Beta 15 Hz e Gamma 40 Hz.
+- Explicação curta visível e explicação completa recolhida em "Mostrar explicação completa".
+- Temporizador opcional.
+- Reprodução indefinida por defeito.
+- Sequência programada de combinações frequência + pulso + duração.
+- Guardar/carregar estado no browser.
+- Exportar WAV.
+- Manifesto PWA e service worker para funcionamento offline depois de alojada em HTTPS.
+
+Novidade v6.4
+-----------
+- Foi adicionado um temporizador opcional.
+- Por defeito, o som toca indefinidamente até o utilizador carregar em Parar.
+- O temporizador só limita a duração quando a opção "Temporizador opcional" está selecionada.
+- Foi adicionada uma área recolhida para "Sequência programada", evitando sobrecarga visual na interface principal.
+- A sequência permite criar várias etapas. Cada etapa tem:
+  - nome;
+  - frequência base em Hz;
+  - pulso em Hz;
+  - duração em horas/minutos;
+  - nível;
+  - modo de pulso.
+- A sequência de exemplo incluída é:
+  1) 20 minutos de 285 Hz + 2 Hz;
+  2) 8 horas de 582 Hz + 2 Hz.
+- 582 Hz fica tratado como frequência personalizada. A app permite frequências fora da lista Solfeggio.
+
+Novidade v5
+-----------
+- Acrescentada a frequência Solfeggio 852 Hz aos presets guiados.
+- Catálogo atualizado de 56 para 63 presets: 9 frequências base × 7 pulsos.
+
+Novidade v4
+-----------
+- Paleta visual escura neutralizada para reduzir saturação visual.
+- Dourado removido de textos, botões, caixas e setas por padrão.
+- Dourado reservado aos sliders e ao contorno de foco dos campos editados.
+- Verde esmeralda reservado para ativação/checkboxes e para a borda do botão Exportar WAV.
+- Canal inativo continua com opacidade reduzida.
+- Mantém a nota sobre presets dentro da app e neste documento.
+
+Como usar o temporizador
+------------------------
+1. Escolher o preset ou editar os canais.
+2. Deixar "Temporizador opcional" desligado para reprodução indefinida.
+3. Ligar "Temporizador opcional" apenas quando quiser limitar a duração.
+4. Definir horas/minutos.
+5. Carregar em Iniciar.
+6. A app para automaticamente no fim do tempo definido.
+
+Como usar a sequência programada
+--------------------------------
+1. Abrir "Sequência programada".
+2. Editar as linhas existentes ou adicionar uma linha nova.
+3. Definir frequência base, pulso e duração.
+4. Carregar em "Iniciar sequência".
+5. A app toca cada etapa pela duração definida e passa automaticamente para a próxima.
+6. Se "Repetir a sequência" estiver desligado, a app para no fim.
+7. Se "Repetir a sequência" estiver ligado, a sequência volta ao início.
+
+Como testar no computador
+-------------------------
+Pode abrir index.html num browser moderno para testar a interface e o áudio.
+No entanto, o funcionamento PWA/offline completo normalmente requer HTTPS.
+
+Como instalar no Android
+------------------------
+1. No smartphone Android, abrir o link da aplicação no Chrome.
+2. A Internet deve estar ligada nesta primeira instalação.
+3. Esperar que a aplicação carregue completamente.
+4. Abrir o menu do Chrome nos três pontos ⋮.
+5. Escolher uma das opções disponíveis:
+   - Instalar app
+   - Criar atalho
+   - Adicionar ao ecrã principal
+   - Adicionar à página inicial
+   A melhor opção, quando aparece, é "Instalar app".
+   Se só aparecer "Criar atalho", também pode ser usado.
+6. Confirmar a instalação/criação do ícone.
+7. Abrir a aplicação pelo novo ícone ainda com Internet ligada.
+8. Esperar cerca de 20 a 30 segundos e abrir pelo menos um preset.
+9. Fechar a aplicação.
+10. Ativar Modo avião.
+11. Abrir novamente a aplicação pelo ícone.
+12. Se a aplicação abrir e mostrar os presets, ficou disponível para uso offline.
+
+Permissões e segurança
+----------------------
+- Não pede contactos, SMS, localização, câmara ou microfone.
+- Não usa bibliotecas externas nem CDN.
+- Não tem anúncios, contas ou login.
+- O som só começa depois do utilizador carregar em "Iniciar" ou "Iniciar sequência".
+- A exportação WAV fica no próprio dispositivo/browser.
+
+Limitações
+----------
+- A precisão real depende do smartphone, DAC, browser, auscultadores/colunas.
+- Não é gerador de sinal calibrado.
+- Sequências muito longas dependem de o browser/sistema não suspender a app.
+- Para sessões de muitas horas, use bateria suficiente, ecrã com brilho baixo e teste antes.
+- Quando online, o Chrome pode contactar o GitHub Pages para verificar/carregar ficheiros da PWA.
+- Para garantir ausência de ligação durante o uso, usar em Modo avião.
+
+
+ATUALIZAÇÃO v6.4
+- Corrige a introdução de pulsos decimais nas sequências.
+- O campo Pulso aceita 0.1, 0.5 e também 0,1 / 0,5 em teclados portugueses.
+- Abrir limpar_cache.html depois do upload para remover versões antigas da PWA.
+
+
+ATUALIZAÇÃO v6.4
+- Acrescentados presets de sequência programada:
+  1) Sequência Noturna Alargada — foco 528 Hz;
+  2) Reset de Ansiedade e Ancoragem;
+  3) Foco Profundo e Escrita Crítica;
+  4) Meditação de Transição Cósmica.
+- O campo Pulso nas sequências aceita decimais com ponto ou vírgula: 0.1, 0.5, 0,1 e 0,5.
+- A interface mantém as sequências recolhidas para evitar overcrowding visual.
